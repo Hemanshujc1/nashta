@@ -1,0 +1,107 @@
+// Home-page flavour palette. `accent` drives the --flavour CSS variable; `ink` is the readable text colour on top of it.
+// `crop` is the pack's bounds inside the product photo ([left, top, right, bottom], 0-1), used to texture the 3D packs.
+export const flavours = [
+  {
+    id: 'cream-n-onion',
+    name: "Cream 'n' Onion",
+    tagline: 'Cool, creamy & perfectly oniony.',
+    desc: 'The classic smooth and tangy flavour you love — made with atta, clean sunflower oil and zero guilt.',
+    price: 99,
+    weight: '100g',
+    spice: 1,
+    packColor: '#00B4AC',
+    accent: '#00D4CB',
+    ink: '#070708',
+    img: '/products/cream-n-onion.jpg',
+    crop: [0.252, 0.102, 0.763, 0.894],
+  },
+  {
+    id: 'manchurian',
+    name: 'Manchurian',
+    tagline: 'Bold. Garlicky. Addictive.',
+    desc: 'Desi Chinese at its finest. Bold, garlicky, and packed with that addictive street-style umami punch.',
+    price: 99,
+    weight: '100g',
+    spice: 3,
+    packColor: '#5C3317',
+    accent: '#D4A373',
+    ink: '#070708',
+    img: '/products/manchurian.jpg',
+    crop: [0.280, 0.149, 0.722, 0.865],
+  },
+  {
+    id: 'punjabi-tadka',
+    name: 'Punjabi Tadka',
+    tagline: 'Smoky. Spicy. Fiercely desi.',
+    desc: 'An explosion of rustic Indian spices. Smoky, spicy, and fiercely desi — Punjabi dhadaka in every bite.',
+    price: 99,
+    weight: '100g',
+    spice: 4,
+    packColor: '#C8681A',
+    accent: '#E07B20',
+    ink: '#070708',
+    img: '/products/punjabi-tadka.jpg',
+    crop: [0.249, 0.118, 0.759, 0.890],
+  },
+  {
+    id: 'pizza',
+    name: 'Pizza',
+    tagline: 'Cheesy. Herby. Saucy.',
+    desc: 'The comfort of a cheesy, tomato-rich pizza slice in every crunchy bite. Italian vibes, desi soul.',
+    price: 99,
+    weight: '100g',
+    spice: 2,
+    packColor: '#C9930A',
+    accent: '#E8A90C',
+    ink: '#070708',
+    img: '/products/pizza.jpg',
+    crop: [0.256, 0.124, 0.755, 0.913],
+  },
+  {
+    id: 'peri-desi',
+    name: 'Peri Desi',
+    tagline: 'Fiery. Tangy. Not for the faint-hearted.',
+    desc: "A fiery fusion of African bird's eye chilli with a distinct Indian tang. Bold heat with clean ingredients.",
+    price: 99,
+    weight: '100g',
+    spice: 5,
+    packColor: '#C8202A',
+    accent: '#E52B32',
+    ink: '#FFFFFF',
+    img: '/products/peri-desi.jpg',
+    crop: [0.280, 0.147, 0.724, 0.867],
+  },
+  {
+    id: 'methi-oregano',
+    name: 'Methi',
+    tagline: 'Earthy. Herby. Surprisingly delightful.',
+    desc: 'A surprising yet delightful blend of earthy Indian fenugreek and Mediterranean oregano. Desi magic.',
+    price: 99,
+    weight: '100g',
+    spice: 1,
+    packColor: '#1E6B2E',
+    accent: '#2E8B42',
+    ink: '#FFFFFF',
+    img: '/products/methi-oregano.jpg',
+    crop: [0.249, 0.125, 0.759, 0.886],
+  },
+];
+
+export const DEFAULT_FLAVOUR_ID = 'peri-desi';
+export const getFlavour = (id) => flavours.find((f) => f.id === id) ?? flavours[0];
+
+export const BOX_SIZE = 3;
+export const BOX_PRICE = 200;
+
+// Cart line for a completed 3-flavour box.
+export const boxCartItem = (box) => ({
+  id: `box-${Date.now()}`,
+  name: 'Custom 3-Flavour Box',
+  price: BOX_PRICE,
+  image: box[0].img,
+  weight: 300,
+  description: `Packs: ${box.map((f) => f.name).join(', ')}`,
+  isBox: true,
+  boxFlavours: box.map((f) => f.name),
+  boxIds: box.map((f) => f.id),
+});

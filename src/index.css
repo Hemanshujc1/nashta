@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&display=swap');
+
+@import "tailwindcss";
+
+/* Active flavour colour (PRD v3.1 §2). Home.jsx overrides it on <html>; registered so it can tween. */
+@property --flavour {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #E52B32;
+}
+
+/* Pinned scroll stages only on large, tall-enough viewports (PRD v3 §9: no pinned scenes on phones). */
+@custom-variant pin (@media (min-width: 1024px) and (min-height: 700px));
+
+@theme {
+  --color-flavour: var(--flavour);
+  --color-bg: var(--bg);
+  --color-bg-alt: var(--bg-alt);
+  --color-surface: var(--surface);
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-success: var(--success);
+  --color-warm: var(--warm);
+  --color-border: var(--border);
+
+  --color-nashta-red: #E52B32;
+  --color-nashta-warm: #D8B477;
+  --color-nashta-cream: #F7F5F0;
+  
+  /* Flavor accents */
+  --color-flavor-teal: #00B4AC;
+  --color-flavor-brown: #5C3317;
+  --color-flavor-green: #1E6B2E;
+  --color-flavor-gold: #C9930A;
+  --color-flavor-red: #C8202A;
+  --color-flavor-lime: #4A7C32;
+
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Bricolage Grotesque', 'Inter', sans-serif;
+  --font-serif: 'Instrument Serif', serif;
+  --font-cine: 'Bricolage Grotesque', 'Inter', sans-serif;
+  --font-serif-cine: 'Instrument Serif', serif;
+}
+
+:root {
+  --bg: #050506;
+  --bg-alt: #0D0D10;
+  --surface: #17171B;
+  --primary: #E52B32;
+  --accent: #D8B477;
+  --text: #F7F5F0;
+  --text-muted: #B8B6B2;
+  --success: #3FBD79;
+  --warm: #D8B477;
+  --border: rgba(255, 255, 255, 0.14);
+  --flavour: #E52B32;
+  --flavour-ink: #FFFFFF;
+  transition: --flavour 0.6s ease;
+}
+
+@layer base {
+  body {
+    @apply bg-bg text-text font-sans antialiased;
+    background-color: #050506;
+    color: #F7F5F0;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-normal uppercase;
+  }
+
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: #E52B32;
+    color: #F7F5F0;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(28, 28, 28, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .glass-dark {
+    background: rgba(8, 8, 8, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+  }
+
+  .text-gradient-warm {
+    background: linear-gradient(135deg, #F7F5F0 0%, #D8B477 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glow-red {
+    box-shadow: 0 0 40px rgba(229, 43, 50, 0.3);
+  }
+
+  .glow-flavour {
+    box-shadow: 0 0 40px color-mix(in srgb, var(--flavour) 30%, transparent);
+  }
+
+  .glow-warm {
+    box-shadow: 0 0 40px rgba(216, 180, 119, 0.2);
+  }
+
+  .card-dark {
+    background: #1C1C1C;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+  }
+  
+  .section-spacing {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  @media (min-width: 768px) {
+    .section-spacing {
+      padding-top: 112px;
+      padding-bottom: 112px;
+    }
+  }
+}
+
+
+/* ---------- Black Cinema (PRD v3) ---------- */
+.font-cine { font-family: var(--font-cine); }
+.font-serif-cine { font-family: var(--font-serif-cine); }
+
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+html.has-cursor, html.has-cursor a, html.has-cursor button, html.has-cursor [data-cursor] { cursor: none; }
+
+.film-grain {
+  position: fixed; inset: -50%; z-index: 250; pointer-events: none; opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 0.9s steps(6) infinite;
+}
+@keyframes grain {
+  0% { transform: translate(0,0); } 20% { transform: translate(-3%,2%); } 40% { transform: translate(2%,-3%); }
+  60% { transform: translate(-2%,-1%); } 80% { transform: translate(3%,3%); } 100% { transform: translate(0,0); }
+}
+@keyframes scrollcue { 0% { transform: translateY(-100%); } 100% { transform: translateY(200%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .film-grain { animation: none; }
+  :root { transition: none; }
+}
+
+/* Ambient loops for the video-free scenes (S08, S09, S11). Components drop the animation when motion is paused. */
+@keyframes halo-pulse { 0%, 100% { transform: scale(1); opacity: 0.55; } 50% { transform: scale(1.16); opacity: 0.95; } }
+@keyframes pack-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@keyframes light-drift { from { transform: translate3d(-7%, 0, 0) skewX(-16deg); } to { transform: translate3d(7%, 0, 0) skewX(-16deg); } }
+@keyframes kenburns { from { transform: scale(1.03); } to { transform: scale(1.14); } }
+
+/* Stroke painted under an opaque fill, so the overlapping contours inside variable-font glyphs stay hidden. */
+.text-outline { color: #050506; -webkit-text-stroke: 2px rgba(246, 243, 237, 0.5); paint-order: stroke fill; }

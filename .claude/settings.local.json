@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pkill -f \"remote-debugging-port=9333\")",
+      "Bash(pkill -f \"vite --port 5199\")",
+      "Bash(sed -i '' 's/^- \\\\[ \\\\] Phase 2 Media pipeline/- [x] Phase 2 Media pipeline/' plan.md)",
+      "Bash(npm run *)",
+      "Bash(python3 -)"
+    ]
+  }
+}
